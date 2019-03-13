@@ -12,11 +12,12 @@
 plot_OM_SSB = function(output, item = "OM_ssb_R1", mean = TRUE, ...){
   if(mean == T){
     get_item = colMeans(output[, grepl(item, colnames(output))])
+    plot(get_item, xlab = "Year", ylab = item, type = "l")
   }
   else {
-    get_item = output[1, grepl(item, colnames(output))]
+    get_item = output[, grepl(item, colnames(output))]
+    boxplot(get_item, xlab = "Year", ylab = item, type = "l")
   }
-  plot(get_item, xlab = "Year", ylab = item, type = "l")
 }
 
 # plot_OM_SSB(output)
