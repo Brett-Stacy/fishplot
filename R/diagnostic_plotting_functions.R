@@ -16,7 +16,8 @@ plot_OM_SSB = function(output, item = "OM_ssb_R1", mean = TRUE, ...){
   }
   else {
     get_item = output[, grepl(item, colnames(output))]
-    boxplot(get_item, xlab = "Year", ylab = item, type = "l")
+    boxplot(get_item, xlab = "Year", ylab = item, type = "l", xaxt = "n")
+    axis(1, at = seq(10, round(dim(get_item)[2], -1), 10))
   }
 }
 
