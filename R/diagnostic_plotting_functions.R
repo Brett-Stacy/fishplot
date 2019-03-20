@@ -11,12 +11,17 @@
 # line plot tracking SSB
 plot_OM_SSB = function(output, item = "OM_ssb_R1", mean = TRUE, ...){
   if(mean == T){
-    get_item = colMeans(output[, grepl(item, colnames(output))])
-    plot(get_item, xlab = "Year", ylab = item, type = "l")
+    get_item = output[, grepl(item, colnames(output))]
+    if(NCOL(get_item) == 1){
+      plot(get_item, xlab = "Year", ylab = item, type = "l", ...)
+    }
+    else {
+      plot(colMeans(get_item), xlab = "Year", ylab = item, type = "l", ...)
+    }
   }
   else {
     get_item = output[, grepl(item, colnames(output))]
-    boxplot(get_item, xlab = "Year", ylab = item, type = "l", xaxt = "n")
+    boxplot(get_item, xlab = "Year", ylab = item, type = "l", xaxt = "n", ...)
     axis(1, at = seq(10, round(dim(get_item)[2], -1), 10))
   }
 }
