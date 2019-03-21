@@ -8,7 +8,18 @@
 
 ## Load OM output from some model:
 
-# line plot tracking SSB
+
+#' SSB Time Series
+#'
+#' Plot SSB from output from Planetfish2 operating model or assessment model.
+#'
+#' This function plots data from the \code{output} matrix. This can be either OM or AM output as SSB or REC etc.
+#' The intention is to be able to plot an item by passing the unique column name identifier to \code{plot()}.
+#' @param output The output matrix from a model run.
+#' @param item = OM_ssb_R1 as default but can be any known column name type.
+#' @param mean = Logical. Should the mean be plotted?
+#' @return Returns a time series plot of item.
+#' @export
 plot_OM_SSB = function(output, item = "OM_ssb_R1", mean = TRUE, ...){
   if(mean == T){
     get_item = output[, grepl(item, colnames(output))]
@@ -32,7 +43,15 @@ plot_OM_SSB = function(output, item = "OM_ssb_R1", mean = TRUE, ...){
 
 
 
-# tracking age structure
+#' Age structure of a population.
+#'
+#' Plot histogram of age frequencies for a particular region.
+#'
+#' This function plots age frequency data from the \code{output2} array. \code{output2} should be of dimention [n_iters, ages, years, regions]
+#' @param output2 The output matrix from a model run.
+#' @param region Which region should plotted?
+#' @return Returns a histogram of age structure for every year.
+#' @export
 plot_OM_Ages = function(output2, region){
   par(mfrow = c(4,5), mar = c(.5, .5, .5, .5))
   for (i in seq(1, dim(output2)[3], 5)) {
