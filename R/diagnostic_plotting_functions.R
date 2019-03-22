@@ -50,13 +50,15 @@ plot_OM_SSB = function(output, item = "OM_ssb_R1", mean = TRUE, ...){
 #' This function plots age frequency data from the \code{output2} array. \code{output2} should be of dimention [n_iters, ages, years, regions]
 #' @param output2 The output matrix from a model run.
 #' @param region Which region should plotted?
+#' @param skip Skip years if needed. = 1 means don't skip any years.
 #' @return Returns a histogram of age structure for every year.
 #' @export
-plot_OM_Ages = function(output2, region){
+plot_OM_Ages = function(output2, region, skip){
   par(mfrow = c(4,5), mar = c(.5, .5, .5, .5))
-  for (i in seq(1, dim(output2)[3], 5)) {
+  for (i in seq(1, dim(output2)[3], skip)) {
     mean_iter = apply(output2, c(2,3,4), mean)
     barplot(mean_iter[,i,region], yaxt = "n", xaxt = "n")
+    legend("topright", paste("year:", i), bty = "n")
   }
 }
 
