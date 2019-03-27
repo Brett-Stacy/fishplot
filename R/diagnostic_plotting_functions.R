@@ -48,7 +48,7 @@ plot_OM_SSB = function(output, item = "OM_ssb_R1", mean = TRUE, ...){
 #' Plot histogram of age frequencies for a particular region.
 #'
 #' This function plots age frequency data from the \code{output2} array. \code{output2} should be of dimention [n_iters, ages, years, regions]
-#' @param output2 The output matrix from a model run.
+#' @param output2 The output array from a model run.
 #' @param region Which region should plotted?
 #' @param skip Skip years if needed. = 1 means don't skip any years.
 #' @return Returns a histogram of age structure for every year.
@@ -64,3 +64,35 @@ plot_OM_Ages = function(output2, region, skip){
 
 # plot_OM_Ages(output2, 1)
 
+
+
+
+
+#' Relative Error
+#'
+#' Plot relative error statistic between SSBs
+#'
+#' This function uses data from the \code{output} matrix to plot the relative error between operating and assessment model output quantities.
+#' This will need adaptation as more results are acquired.
+#' @param output The output matrix from a model run.
+#' @param truth The true value(s).
+#' @param est The estimated value(s).
+#' @param half Logical. Should the true value(s) be halved? This is for SSB0 which is reported as a combination for regions.
+#' @return Returns a boxplot of relative error.
+#' @export
+plot_err = function(output, truth, est, half, ...){
+
+  switch(half,
+         yes = om_output <- output[, grepl(truth, colnames(output))]/2,
+         no = om_outpu <- output[, grepl(truth, colnames(output))])
+
+  am_output = output[, grepl(est, colnames(output))]
+
+  err = (am_output - om_output)/om_output
+
+  boxplot(err, ...)
+
+
+}
+
+plot_err(output, truth = "OM_ssb0", est = "AM_ssb0", half = "yes")
