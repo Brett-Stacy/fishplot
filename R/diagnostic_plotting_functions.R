@@ -77,16 +77,20 @@ plot_OM_Ages = function(output2, region, skip){
 #' @param output The output matrix from a model run.
 #' @param truth The true value(s).
 #' @param est The estimated value(s).
-#' @param half Should the true value(s) be halved? This is for SSB0 which is reported as a combination for regions.
+#' @param type Switch. Type of SSB comparison. Options: "initial", "current", "status".
 #' @return Returns a boxplot of relative error.
 #' @export
-plot_SSB_err = function(output, truth, est, half, ...){
+plot_SSB_err = function(output, truth, est, type, ...){
 
-  switch(half,
-         yes = om_output <- output[, grepl(truth, colnames(output))]/2,
-         no = om_outpu <- output[, grepl(truth, colnames(output))])
+  switch(type,
+         initial = {om_output <- output[, grepl(truth, colnames(output))]/2;
+         am_output <- output[, grepl(est, colnames(output))]},
 
-  am_output = output[, grepl(est, colnames(output))]
+         current = {om_output <- output[, grepl(truth, colnames(output))];
+         am_output <- output[, grepl(est, colnames(output))]},
+
+         status = {om_output <- output[, grepl(truth, colnames(output))]/(output[, grepl("OM_ssb0", colnames(output))]/2);
+         am_output <- output[, grepl(est, colnames(output))]/output[, grepl("AM_ssb0", colnames(output))]})
 
   err = (am_output - om_output)/om_output
 
