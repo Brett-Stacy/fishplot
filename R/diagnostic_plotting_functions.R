@@ -77,7 +77,7 @@ plot_OM_Ages = function(output2, region, skip){
 #' @param output The output matrix from a model run.
 #' @param truth The true value(s).
 #' @param est The estimated value(s).
-#' @param half Logical. Should the true value(s) be halved? This is for SSB0 which is reported as a combination for regions.
+#' @param half Should the true value(s) be halved? This is for SSB0 which is reported as a combination for regions.
 #' @return Returns a boxplot of relative error.
 #' @export
 plot_err = function(output, truth, est, half, ...){
