@@ -95,4 +95,4 @@ plot_err = function(output, truth, est, half, ...){
 
 }
 
-plot_err(output, truth = "OM_ssb0", est = "AM_ssb0", half = "yes")
+# plot_err(output, truth = "OM_ssb0", est = "AM_ssb0", half = "yes")
