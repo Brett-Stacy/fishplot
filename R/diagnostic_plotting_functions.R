@@ -80,7 +80,7 @@ plot_OM_Ages = function(output2, region, skip){
 #' @param half Should the true value(s) be halved? This is for SSB0 which is reported as a combination for regions.
 #' @return Returns a boxplot of relative error.
 #' @export
-plot_err = function(output, truth, est, half, ...){
+plot_SSB_err = function(output, truth, est, half, ...){
 
   switch(half,
          yes = om_output <- output[, grepl(truth, colnames(output))]/2,
