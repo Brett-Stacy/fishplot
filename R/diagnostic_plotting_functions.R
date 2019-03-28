@@ -73,7 +73,7 @@ plot_OM_Ages = function(output2, region, skip){
 #' Plot relative error statistic between SSBs
 #'
 #' This function uses data from the \code{output} matrix to plot the relative error between operating and assessment model output quantities.
-#' This will need adaptation as more results are acquired.
+#' This will need adaptation as more results are acquired. The main one will be to have the option to vectorize the boxplots like Pauls.
 #' @param output The output matrix from a model run.
 #' @param truth The true value(s).
 #' @param est The estimated value(s).
