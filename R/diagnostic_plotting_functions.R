@@ -20,7 +20,7 @@
 #' @param mean = Logical. Should the mean be plotted?
 #' @return Returns a time series plot of item.
 #' @export
-plot_OM_SSB = function(output, item = "OM_ssb_R1", mean = TRUE, ...){
+plot_SSB = function(output, item = "OM_ssb_R1", mean = TRUE, ...){
   if(mean == T){
     get_item = output[, grepl(item, colnames(output))]
     if(NCOL(get_item) == 1){
