@@ -75,22 +75,24 @@ plot_OM_Ages = function(output2, region, skip){
 #' This function uses data from the \code{output} matrix to plot the relative error between operating and assessment model output quantities.
 #' This will need adaptation as more results are acquired. The main one will be to have the option to vectorize the boxplots like Pauls.
 #' @param output The output matrix from a model run.
-#' @param truth The true value(s).
-#' @param est The estimated value(s).
 #' @param type Switch. Type of SSB comparison. Options: "initial", "current", "status".
 #' @return Returns a boxplot of relative error.
 #' @export
-plot_SSB_err = function(output, truth, est, type, ...){
+plot_SSB_err = function(output, type, ...){
 
   switch(type,
-         initial = {om_output <- output[, grepl(truth, colnames(output))]/2;
-         am_output <- output[, grepl(est, colnames(output))]},
+         initial = {om_output <- output[, grepl("OM_ssb0", colnames(output))]/2;
+         am_output <- output[, grepl("AM_ssb0_", colnames(output))]},
 
-         current = {om_output <- output[, grepl(truth, colnames(output))];
-         am_output <- output[, grepl(est, colnames(output))]},
+         current = {om_output <- output[, grepl("OM_ssb_R1", colnames(output))];
+         om_output <- om_output[, ncol(om_output)];
+         am_output <- output[, grepl("AM_ssb_", colnames(output))];
+         am_output <- am_output[, ncol(am_output)]},
 
-         status = {om_output <- output[, grepl(truth, colnames(output))]/(output[, grepl("OM_ssb0", colnames(output))]/2);
-         am_output <- output[, grepl(est, colnames(output))]/output[, grepl("AM_ssb0", colnames(output))]})
+         status = {om_output <- output[, grepl("OM_ssb_R1", colnames(output))]/(output[, grepl("OM_ssb0", colnames(output))]/2);
+         om_output <- om_output[, ncol(om_output)];
+         am_output <- output[, grepl("AM_ssb_", colnames(output))]/output[, grepl("AM_ssb0", colnames(output))];
+         am_output <- am_output[, ncol(am_output)]})
 
   err = (am_output - om_output)/om_output
 
