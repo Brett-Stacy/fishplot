@@ -65,10 +65,40 @@ plot_OM_Ages = function(output2, region, skip){
 # plot_OM_Ages(output2, 1)
 
 
+#' Relative Error SSB
+#'
+#' Calculate relative error for SSB
+#'
+#' This function needs a description.
+#' @param output The output matrix from a model run.
+#' @param type Switch. Type of SSB index. Options: "initial", "current", "status".
+#' @return Returns a vector distribution of relative error.
+#' @export
+SSB_err = function(output, type){
+  switch(type,
+         initial = {om_output <- output[, grepl("OM_ssb0", colnames(output))]/2;
+         am_output <- output[, grepl("AM_ssb0_", colnames(output))]},
+
+         current = {om_output <- output[, grepl("OM_ssb_R1", colnames(output))];
+         om_output <- om_output[, ncol(om_output)];
+         am_output <- output[, grepl("AM_ssb_", colnames(output))];
+         am_output <- am_output[, ncol(am_output)]},
+
+         status = {om_output <- output[, grepl("OM_ssb_R1", colnames(output))]/(output[, grepl("OM_ssb0", colnames(output))]/2);
+         om_output <- om_output[, ncol(om_output)];
+         am_output <- output[, grepl("AM_ssb_", colnames(output))]/output[, grepl("AM_ssb0", colnames(output))];
+         am_output <- am_output[, ncol(am_output)]})
+
+  err = (am_output - om_output)/om_output
+
+  return(err)
+
+}
+
+# plot_err(output, truth = "OM_ssb0", est = "AM_ssb0", half = "yes")
 
 
-
-#' Relative Error
+#' Relative Error Plot
 #'
 #' Plot relative error statistic between SSBs
 #'
