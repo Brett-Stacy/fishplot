@@ -4,14 +4,10 @@
 \alias{plot_SSB_err}
 \title{Relative Error}
 \usage{
-plot_SSB_err(output, truth, est, type, ...)
+plot_SSB_err(output, type, ...)
 }
 \arguments{
 \item{output}{The output matrix from a model run.}
-
-\item{truth}{The true value(s).}
-
-\item{est}{The estimated value(s).}
 
 \item{type}{Switch. Type of SSB comparison. Options: "initial", "current", "status".}
 }
@@ -23,5 +19,5 @@ Plot relative error statistic between SSBs
 }
 \details{
 This function uses data from the \code{output} matrix to plot the relative error between operating and assessment model output quantities.
-This will need adaptation as more results are acquired.
+This will need adaptation as more results are acquired. The main one will be to have the option to vectorize the boxplots like Pauls.
 }
